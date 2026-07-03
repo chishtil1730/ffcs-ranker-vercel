@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FFCS Ranker</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="wrap">
+    <header>
+      <h1>FFCS Ranker</h1>
+      <p class="sub">Upload your FFCS slot PDFs and get faculty ratings, ranked.</p>
+    </header>
+
+    <section class="upload-card" id="dropzone">
+      <input type="file" id="fileInput" accept="application/pdf" multiple hidden>
+      <label for="fileInput" class="upload-label">
+        <span class="upload-icon">＋</span>
+        <span>Click or drag PDFs here</span>
+        <span class="hint">You can select multiple files</span>
+      </label>
+      <div id="fileList" class="file-list"></div>
+      <button id="submitBtn" class="btn" disabled>Rank Faculty</button>
+    </section>
+
+    <section id="status" class="status"></section>
+    <section id="results" class="results"></section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
