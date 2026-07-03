@@ -48,28 +48,53 @@ function ratingColor(rating) {
 }
 
 function renderPdfBlock(pdfResult) {
-  const block = document.createElement("div");
-  block.className = "pdf-block";
+  const card = document.createElement("div");
+  card.className = "pdf-card";
 
   if (pdfResult.error) {
-    block.innerHTML = `
-      <div class="pdf-header">
-        <h2>${pdfResult.filename}</h2>
-        <span class="meta">Failed to process</span>
+    card.innerHTML = `
+      <div class="pdf-card-head">
+        <div class="pdf-card-head-left">
+          <h2>${pdfResult.filename}</h2>
+          <span class="meta">Failed to process</span>
+        </div>
       </div>
-      <div style="padding:16px 20px;color:#b91c1c;">${pdfResult.error}</div>`;
-    return block;
+      <div class="error-msg">${pdfResult.error}</div>`;
+    return card;
   }
 
   const { filename, results, stats } = pdfResult;
 
-  const header = document.createElement("div");
-  header.className = "pdf-header";
-  header.innerHTML = `
-    <h2>${filename}</h2>
-    <span class="meta">${stats.total_slots} slots · ${stats.unique_faculty} faculty · ${stats.not_found} not found</span>`;
-  block.appendChild(header);
+  const head = document.createElement("div");
+  head.className = "pdf-card-head";
+  head.innerHTML = `
+    <div class="pdf-card-head-left">
+      <h2>${filename}</h2>
+      <span class="meta">${stats.total_slots} slots · ${stats.unique_faculty} faculty · ${stats.not_found} not found</span>
+    </div>
+    <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>`;
+  card.appendChild(head);
 
+  const preview = document.createElement("div");
+  preview.className = "preview";
+  results.slice(0, 3).forEach((r) => {
+    const pill = document.createElement("span");
+    pill.className = "preview-pill";
+    const dotColor = r.found ? ratingColor(r.rating) : "#f87171";
+    const name = r.found ? (r.matched_faculty || r.faculty_pdf) : r.faculty_pdf;
+    pill.innerHTML = `<span class="preview-dot" style="background:${dotColor}"></span>${name}`;
+    preview.appendChild(pill);
+  });
+  if (results.length > 3) {
+    const more = document.createElement("span");
+    more.className = "preview-pill";
+    more.textContent = `+${results.length - 3} more`;
+    preview.appendChild(more);
+  }
+  card.appendChild(preview);
+
+  const body = document.createElement("div");
+  body.className = "pdf-card-body";
   const table = document.createElement("table");
   table.innerHTML = `
     <thead>
@@ -105,8 +130,14 @@ function renderPdfBlock(pdfResult) {
     tbody.appendChild(tr);
   });
 
-  block.appendChild(table);
-  return block;
+  body.appendChild(table);
+  card.appendChild(body);
+
+  head.addEventListener("click", () => {
+    card.classList.toggle("open");
+  });
+
+  return card;
 }
 
 submitBtn.addEventListener("click", async () => {
