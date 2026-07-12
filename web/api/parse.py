@@ -1,6 +1,6 @@
 """Vercel serverless function, parse VIT FFCS registration PDFs and merge
 faculty's ratings. Exposes a Flask `app` (the entrypoint Vercel's Python
-runtime looks for) this file is deployable as-is under /api,parse.
+runtime looks for) this file is deployable as-is /api,parse.
 """
 from __future__ import annotations
 
