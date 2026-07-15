@@ -1,4 +1,4 @@
-"""Vercel serverless function, parse VIT FFCS registration PDFs and merge
+""" serverless function, parse VIT FFCS registration PDFs and merge
 faculty's ratings. Exposes a Flask `app`
 this file is deployable as-is /api,parse.
 """
