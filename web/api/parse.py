@@ -1,6 +1,6 @@
 """ serverless function, parse VIT FFCS registration PDFs and merge
 faculty's ratings. Exposes a Flask `application`
-this file is deployable as-is /api,parse.
+this file is deployable as-is /api,parse
 """
 from __future__ import annotations
 
