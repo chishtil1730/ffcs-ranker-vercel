@@ -1,4 +1,4 @@
-""" serverless function, parse VIT FFCS registration PDFs and merge
+""" serverless function, parse VIT FFCS registration page PDFs and merge
 faculty's ratings. Exposes a Flask `app`
 file is deployable as it is /api,parse
 """
